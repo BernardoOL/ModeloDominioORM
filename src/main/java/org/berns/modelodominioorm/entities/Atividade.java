@@ -3,7 +3,7 @@ package org.berns.modelodominioorm.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "TB_ATIVIDADE")
@@ -15,12 +15,23 @@ public class Atividade implements Serializable {
     private Integer id;
 
     private String nome;
+
+    @Column(columnDefinition = "TEXT")
     private String descricao;
     private Double preco;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
+
+    @ManyToMany
+    @JoinTable(name = "TB_ATIVIDADE_PARTICIPANTE",
+            joinColumns = @JoinColumn(name = "ATIVIDADE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "PARTICIPANTE_ID"))
+    private Set<Participante> participantes = new HashSet<>();
+
+    @OneToMany(mappedBy = "atividade")
+    private List<Bloco> blocos = new ArrayList<>();
 
     public Atividade() {
     }
@@ -57,6 +68,18 @@ public class Atividade implements Serializable {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public Set<Participante> getParticipantes() {
+        return participantes;
+    }
+
+    public List<Bloco> getBlocos() {
+        return blocos;
     }
 
     @Override

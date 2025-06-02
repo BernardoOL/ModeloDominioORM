@@ -3,9 +3,7 @@ package org.berns.modelodominioorm.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "TB_CATEGORIA")
@@ -19,7 +17,7 @@ public class Categoria implements Serializable {
     private String descricao;
 
     @OneToMany(mappedBy = "categoria")
-    private Set<Atividade> atividades = new HashSet<>();
+    private List<Atividade> atividades = new ArrayList<>();
 
     public Categoria() {
     }
@@ -39,6 +37,10 @@ public class Categoria implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public List<Atividade> getAtividades() {
+        return atividades;
     }
 
     @Override

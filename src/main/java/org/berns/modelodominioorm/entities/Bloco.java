@@ -18,6 +18,10 @@ public class Bloco implements Serializable {
     private Instant inicio;
     private Instant fim;
 
+    @ManyToOne
+    @JoinColumn(name = "atividade")
+    private Atividade atividade;
+
     public Bloco() {}
 
     public Bloco(Integer id, Instant inicio, Instant fim) {
@@ -44,6 +48,10 @@ public class Bloco implements Serializable {
 
     public void setFim(Instant fim) {
         this.fim = fim;
+    }
+
+    public Atividade getAtividade() {
+        return atividade;
     }
 
     @Override
